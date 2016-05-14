@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+	<title>Ejemplo Primefaces + JSF</title>
+</h:head>
+
+<h:body>
+
+	
+
+	<p:separator />
+
+	<p:accordionPanel id="equipos" activeIndex="null" dynamic="true"
+		value="#{equipoBean.equiposList}" var="equipo" >
+
+
+		<p:tab title="#{equipo.nombre}">
+
+
+
+			<p:commandLink value="adicionar equipo detalle" onclick="PF('nuevoItem').show()"> 
+					
+				</p:commandLink>
+
+
+			<p:separator />
+
+			<p:dataTable id="equipodetalleTable" value="#{equipoBean.equipodetalleList}" var="detalle">
+
+
+
+					<p:column headerText="Nombre">
+						<p:outputLabel value="#{detalle.nombre}"></p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Placa">
+						<h:outputText value="#{detalle.placa}"/>
+					</p:column>
+
+
+				</p:dataTable>
+				
+
+			
+		</p:tab>
+
+
+	</p:accordionPanel>
+	
+	<p:dialog id="nuevoItem" widgetVar="nuevoItem" resizable="false"
+		closeOnEscape="true">
+
+		<h:form id="equipoDetalleForm">
+
+			<p:growl id="growl2" showDetail="true" life="2000" />
+
+			<h:panelGrid columns="2">
+
+				<h:outputText value="Nombre equipo " />
+				<p:inputText id="nombre" value="#{equipoBean.nombreEquipoDetalle}"/>
+
+				<h:outputText value="Placa " />
+				<p:inputText id="placa" value="#{equipoBean.placa}" />
+				
+				<p:commandButton value="Aceptar" actionListener="#{equipoBean.registarEquipoDetalle}"
+				update=":equipos:equipodetalleTable" onsuccess="PF('nuevoItem').hide()">
+
+				</p:commandButton>
+
+
+				<p:commandButton value="Cancelar" onclick="PF('nuevoItem').hide()">
+
+				</p:commandButton>
+
+
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+
+
+	
+
+
+</h:body>
+</html>
